@@ -12,11 +12,12 @@
 
 ActiveRecord::Schema[8.1].define(version: 2026_07_13_111531) do
   create_table "players", force: :cascade do |t|
-    t.string "code"
-    t.string "country_of_origin"
+    t.text "code", null: false
+    t.text "country_of_origin", null: false
     t.datetime "created_at", null: false
-    t.date "date_of_birth"
-    t.string "name"
+    t.date "date_of_birth", null: false
+    t.text "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_players_on_code", unique: true
   end
 end
