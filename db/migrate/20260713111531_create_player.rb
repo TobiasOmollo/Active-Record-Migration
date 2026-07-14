@@ -1,6 +1,6 @@
 class CreatePlayer < ActiveRecord::Migration[8.1]
   def change
-    create_table :players do |t|
+    create_table :players, id:false do |t|
       t.text :code, null: false
       t.text :name, null: false
       t.date :date_of_birth, null: false

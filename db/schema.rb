@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_165516) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_210012) do
   create_table "managers", id: false, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "id", null: false
@@ -35,5 +35,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_165516) do
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_teams_on_id", unique: true
+  end
+
+  create_table "tournaments", id: false, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "host_country", null: false
+    t.text "id", null: false
+    t.text "name", null: false
+    t.datetime "updated_at", null: false
+    t.text "year", null: false
+    t.index ["id"], name: "index_tournaments_on_id", unique: true
   end
 end
