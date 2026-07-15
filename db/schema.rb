@@ -10,15 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_132819) do
-  create_table "players", force: :cascade do |t|
-    t.text "code", null: false
-    t.text "country_of_origin", null: false
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_165516) do
+  create_table "managers", id: false, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.date "date_of_birth", null: false
+    t.text "id", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
-    t.index ["code"], name: "index_players_on_code", unique: true
+    t.index ["id"], name: "index_managers_on_id", unique: true
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "code"
+    t.string "country_of_origin"
+    t.datetime "created_at", null: false
+    t.date "date_of_birth"
+    t.string "name"
+    t.datetime "updated_at", null: false
   end
 
   create_table "teams", id: false, force: :cascade do |t|
