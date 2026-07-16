@@ -10,13 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_210012) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_105900) do
   create_table "managers", id: false, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "id", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_managers_on_id", unique: true
+  end
+
+  create_table "matches", id: false, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.text "id", null: false
+    t.text "match_type", null: false
+    t.text "referee", null: false
+    t.text "team_a_id", null: false
+    t.text "team_b_id", null: false
+    t.text "tournament_id"
+    t.datetime "updated_at", null: false
+    t.text "venue", null: false
+    t.index ["id"], name: "index_matches_on_id", unique: true
+    t.index ["team_a_id"], name: "index_matches_on_team_a_id"
+    t.index ["team_b_id"], name: "index_matches_on_team_b_id"
+    t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -46,4 +63,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_210012) do
     t.text "year", null: false
     t.index ["id"], name: "index_tournaments_on_id", unique: true
   end
+
+  add_foreign_key "matches", "teams", column: "team_a_id"
+  add_foreign_key "matches", "teams", column: "team_b_id"
+  add_foreign_key "matches", "tournaments"
 end
