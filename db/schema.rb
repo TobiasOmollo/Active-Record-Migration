@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_16_105900) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_18_200911) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "managers", id: false, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "id", null: false
@@ -36,8 +39,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_16_105900) do
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
-  create_table "players", force: :cascade do |t|
-    t.string "code"
+  create_table "players", primary_key: "code", id: :string, force: :cascade do |t|
+    t.text "avatar"
     t.string "country_of_origin"
     t.datetime "created_at", null: false
     t.date "date_of_birth"
