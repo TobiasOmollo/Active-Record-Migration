@@ -10,22 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_18_200911) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_20_054910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "managers", id: false, force: :cascade do |t|
+  create_table "managers", id: :text, force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.text "id", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_managers_on_id", unique: true
   end
 
-  create_table "matches", id: false, force: :cascade do |t|
+  create_table "matches", id: :text, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "date", null: false
-    t.text "id", null: false
     t.text "match_type", null: false
     t.text "referee", null: false
     t.text "team_a_id", null: false
@@ -48,19 +46,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_200911) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "teams", id: false, force: :cascade do |t|
+  create_table "teams", id: :text, force: :cascade do |t|
     t.text "country", null: false
     t.datetime "created_at", null: false
-    t.text "id", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_teams_on_id", unique: true
   end
 
-  create_table "tournaments", id: false, force: :cascade do |t|
+  create_table "tournaments", id: :text, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "host_country", null: false
-    t.text "id", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.text "year", null: false
