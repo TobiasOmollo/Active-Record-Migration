@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :match do
     association :team_a, factory: :team
     association :team_b, factory: :team
-    association :tournament
+    tournament
 
     date { Faker::Date.between(from: '2024-01-01', to: '2026-12-31') }
     venue { Faker::Address.city }
