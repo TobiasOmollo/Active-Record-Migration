@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_20_092951) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_113717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "managers", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "managers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "name", null: false
     t.datetime "updated_at", null: false
     t.index ["id"], name: "index_managers_on_id", unique: true
   end
 
-  create_table "matches", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "matches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.date "date", null: false
     t.text "match_type", null: false
@@ -37,18 +37,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_092951) do
     t.index ["tournament_id"], name: "index_matches_on_tournament_id"
   end
 
-  create_table "players", id: false, force: :cascade do |t|
+  create_table "players", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "code", null: false
     t.text "country_of_origin", null: false
     t.datetime "created_at", null: false
     t.date "date_of_birth", null: false
-    t.uuid "id"
     t.text "name", null: false
+    t.integer "status"
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_players_on_code", unique: true
   end
 
-  create_table "teams", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "teams", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "country", null: false
     t.datetime "created_at", null: false
     t.text "name", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_092951) do
     t.index ["id"], name: "index_teams_on_id", unique: true
   end
 
-  create_table "tournaments", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "tournaments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "host_country", null: false
     t.text "name", null: false
