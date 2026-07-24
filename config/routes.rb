@@ -11,4 +11,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  #Teams Table
+  get "teams/new", to: "teams#new"
+  post "teams", to: "teams#create"
+  #For Players Table
+  get "players/new", to: "players#new"
+  post "players", to: "players#create"
 end

@@ -1,0 +1,11 @@
+<h1>New Team</h1>
+
+<%= form_with model: Team.new, url: teams_path do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :country %>
+  <%= form.text_field :country %>
+
+  <%= form.submit "Create Team" %>
+<% end %>
