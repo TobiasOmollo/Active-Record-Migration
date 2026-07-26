@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 class Team < ApplicationRecord
   validates :name, presence: true
   validates :country, presence: true
 end  
->>>>>>> Stashed changes
