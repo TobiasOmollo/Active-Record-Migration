@@ -15,6 +15,5 @@ Rails.application.routes.draw do
   resources :teams, only: [:new, :create, :edit, :update]
 
   #For Players Table
-  get "players/new", to: "players#new"
-  post "players", to: "players#create"
+  resources :players, only: [:new, :create]
 end
