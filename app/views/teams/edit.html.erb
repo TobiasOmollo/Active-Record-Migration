@@ -1,0 +1,11 @@
+<h1>Edit Team</h1>
+
+<%= form_with model: @team, url: team_path(@team), method: :patch do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :country %>
+  <%= form.text_field :country %>
+
+  <%= form.submit "Update Team" %>
+<% end %>

@@ -1,0 +1,20 @@
+<h1>New Player</h1>
+
+<%= form_with model: Player.new, url: players_path do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :code %>
+  <%= form.text_field :code %>
+
+  <%= form.label :country_of_origin %>
+  <%= form.text_field :country_of_origin %>
+
+  <%= form.label :date_of_birth %>
+  <%= form.date_field :date_of_birth %>
+
+  <%= form.label :status %>
+  <%= form.select :status, Player.statuses.keys %>
+
+  <%= form.submit "Create Player" %>
+<% end %>
