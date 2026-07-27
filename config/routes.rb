@@ -11,4 +11,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  #Teams Table
+  resources :teams, only: [:new, :create, :edit, :update]
+
+  #For Players Table
+  resources :players, only: [:new, :create]
 end
