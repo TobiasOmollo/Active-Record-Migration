@@ -4,4 +4,7 @@ class Player < ApplicationRecord
     on_loan: 1,
     injured: 2,
   }
+
+  has_many :match_lineups
+  has_many :matches, through: :match_lineups
 end
