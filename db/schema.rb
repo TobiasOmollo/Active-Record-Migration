@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[8.1].define(version: 2026_07_30_091655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -25,6 +26,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_30_091655) do
     t.index ["player_id"], name: "index_cards_on_player_id"
   end
 
+=======
+<<<<<<< HEAD
+ActiveRecord::Schema[8.1].define(version: 2026_07_29_073647) do
+=======
+ActiveRecord::Schema[8.1].define(version: 2026_07_30_060617) do
+>>>>>>> bc29d1e (Add goals table with Goal model and score-sync callback)
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+>>>>>>> 26f00ff (Add goals table with Goal model and score-sync callback)
   create_table "goals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "assist_id"
     t.datetime "created_at", null: false
@@ -111,8 +122,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_30_091655) do
     t.index ["id"], name: "index_tournaments_on_id", unique: true
   end
 
+<<<<<<< HEAD
   add_foreign_key "cards", "matches"
   add_foreign_key "cards", "players"
+=======
+>>>>>>> 26f00ff (Add goals table with Goal model and score-sync callback)
   add_foreign_key "goals", "matches"
   add_foreign_key "goals", "players", column: "assist_id"
   add_foreign_key "goals", "players", column: "scorer_id"
