@@ -5,20 +5,14 @@ class Card < ApplicationRecord
   enum :card_type, { yellow: 0, red: 1 }
 
   validate :cannot_add_card_after_red
-  validate :enforce_card_type_limits
-
-  after_create :apply_second_yellow_rule
+  validate :max_two_cards_per_player_per_match
 
   private
 
-  def enforce_card_type_limits
-    existing_same_type = Card.where(match_id: match_id, player_id: player_id, card_type: card_type)
-                              .where.not(id: id).count
-
-    if card_type == "yellow" && existing_same_type >= 2
-      errors.add(:base, "A player cannot receive more than 2 yellow cards in a single match")
-    elsif card_type == "red" && existing_same_type >= 1
-      errors.add(:base, "A player cannot receive more than 1 red card in a single match")
+  def max_two_cards_per_player_per_match
+    existing_count = Card.where(match_id: match_id, player_id: player_id).where.not(id: id).count
+    if existing_count >= 2
+      errors.add(:base, "A player cannot receive more than 2 cards in a single match")
     end
   end
 
