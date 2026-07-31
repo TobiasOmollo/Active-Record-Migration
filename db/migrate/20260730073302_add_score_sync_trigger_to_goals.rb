@@ -1,5 +1,4 @@
 class AddScoreSyncTriggerToGoals < ActiveRecord::Migration[8.1]
-<<<<<<< HEAD
   def up
     execute <<~SQL
       CREATE OR REPLACE FUNCTION recalculate_match_score() RETURNS TRIGGER AS $$
@@ -30,8 +29,5 @@ class AddScoreSyncTriggerToGoals < ActiveRecord::Migration[8.1]
   def down
     execute "DROP TRIGGER IF EXISTS goals_update_match_score ON goals;"
     execute "DROP FUNCTION IF EXISTS recalculate_match_score();"
-=======
-  def change
->>>>>>> 26f00ff (Add goals table with Goal model and score-sync callback)
   end
 end
