@@ -1,0 +1,35 @@
+<h1>New Match</h1>
+
+<%= form_with model: @match, url: matches_path do |form| %>
+  <div>
+    <%= form.label :date %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :match_type %>
+    <%= form.select :match_type, Match.match_types.keys.map { |k| [k.titleize, k] } %>
+  </div>
+
+  <div>
+    <%= form.label :team_a_id, "Team A" %>
+    <%= form.collection_select :team_a_id, @teams, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :team_b_id, "Team B" %>
+    <%= form.collection_select :team_b_id, @teams, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :venue %>
+    <%= form.text_field :venue %>
+  </div>
+
+  <div>
+    <%= form.label :referee %>
+    <%= form.text_field :referee %>
+  </div>
+
+  <%= form.submit "Create Match" %>
+<% end %>

@@ -1,0 +1,27 @@
+<h1>Matches</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Team A</th>
+      <th>Team B</th>
+      <th>Venue</th>
+      <th>Referee</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @matches.each do |match| %>
+      <tr>
+        <td><%= match.date %></td>
+        <td><%= match.match_type.titleize %></td>
+        <td><%= match.team_a.name %></td>
+        <td><%= match.team_b.name %></td>
+        <td><%= match.venue %></td>
+        <td><%= match.referee %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
