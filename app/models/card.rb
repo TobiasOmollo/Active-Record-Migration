@@ -3,37 +3,42 @@ class Card < ApplicationRecord
   belongs_to :player
 
   enum :card_type, { yellow: 0, red: 1 }
+  CARD_TYPE_ALIASES = { "y" => "yellow", "r" => "red" }.freeze
 
-  validate :cannot_add_card_after_red
-  validate :enforce_card_type_limits
+  validate :player_sent_off
+  validate :card_type_limit_exceeded
 
-  after_create :apply_second_yellow_rule
+  after_create :issue_automatic_red_on_second_yellow
+
+  def card_type=(input)
+    super(CARD_TYPE_ALIASES.fetch(input.to_s.strip.downcase))
+  rescue KeyError
+    raise ArgumentError, "card_type must be 'Y' or 'R'"
+  end
 
   private
+  def other_cards_for_same_player_in_match
+    Card.where(match_id: match_id, player_id: player_id).where.not(id: id)
+  end
 
-  def enforce_card_type_limits
-    existing_same_type = Card.where(match_id: match_id, player_id: player_id, card_type: card_type)
-                              .where.not(id: id).count
+  def player_sent_off
+    return unless other_cards_for_same_player_in_match.red.exists?
+    errors.add(:base, "This player has already been sent off in this match")
+  end
+  
+  def card_type_limit_exceeded
+    cards_of_same_type = other_cards_for_this_player_in_match.where(card_type: card_type).count
 
-    if card_type == "yellow" && existing_same_type >= 2
+    if yellow? && cards_of_same_type >= 2
       errors.add(:base, "A player cannot receive more than 2 yellow cards in a single match")
-    elsif card_type == "red" && existing_same_type >= 1
+    elsif red? && cards_of_same_type >= 1
       errors.add(:base, "A player cannot receive more than 1 red card in a single match")
     end
   end
 
-  def cannot_add_card_after_red
-    already_sent_off = Card.where(match_id: match_id, player_id: player_id, card_type: :red).where.not(id: id).exists?
-    if already_sent_off
-      errors.add(:base, "This player has already been sent off in this match")
-    end
-  end
-
-  def apply_second_yellow_rule
-    return unless card_type == "yellow"
-    yellow_count = Card.where(match_id: match_id, player_id: player_id, card_type: :yellow).count
-    if yellow_count == 2
-      Card.create!(match: match, player: player, card_type: :red, minute: minute)
-    end
+  def issue_automatic_red_on_second_yellow
+    return unless yellow?
+    return unless Card.where(match: match, player: player, card_type: :yellow).count == 2
+    Card.create!( match: match, player: player, card_type: :red, minute: minute )
   end
 end
