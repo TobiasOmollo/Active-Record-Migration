@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_29_073647) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_30_091655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "cards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "card_type", null: false
+    t.datetime "created_at", null: false
+    t.uuid "match_id", null: false
+    t.integer "minute"
+    t.uuid "player_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["match_id"], name: "index_cards_on_match_id"
+    t.index ["player_id"], name: "index_cards_on_player_id"
+  end
+
+  create_table "goals", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "assist_id"
+    t.datetime "created_at", null: false
+    t.uuid "match_id", null: false
+    t.integer "minute"
+    t.uuid "scorer_id", null: false
+    t.uuid "team_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assist_id"], name: "index_goals_on_assist_id"
+    t.index ["match_id"], name: "index_goals_on_match_id"
+    t.index ["scorer_id"], name: "index_goals_on_scorer_id"
+    t.index ["team_id"], name: "index_goals_on_team_id"
+  end
 
   create_table "managers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "appointed_on"
@@ -45,7 +70,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_073647) do
     t.text "match_type", null: false
     t.text "referee", null: false
     t.uuid "team_a_id", null: false
+    t.integer "team_a_score"
     t.uuid "team_b_id", null: false
+    t.integer "team_b_score"
     t.uuid "tournament_id"
     t.datetime "updated_at", null: false
     t.text "venue", null: false
@@ -84,6 +111,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_073647) do
     t.index ["id"], name: "index_tournaments_on_id", unique: true
   end
 
+  add_foreign_key "cards", "matches"
+  add_foreign_key "cards", "players"
+  add_foreign_key "goals", "matches"
+  add_foreign_key "goals", "players", column: "assist_id"
+  add_foreign_key "goals", "players", column: "scorer_id"
+  add_foreign_key "goals", "teams"
   add_foreign_key "managers", "teams"
   add_foreign_key "match_lineups", "matches"
   add_foreign_key "match_lineups", "players"
