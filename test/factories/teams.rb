@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :team do
     
-    name{Faker::Team.name}
+    name { Faker::Lorem.word }
     country { Faker::Address.country }
     
   end

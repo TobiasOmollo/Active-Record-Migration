@@ -3,18 +3,11 @@ class Card < ApplicationRecord
   belongs_to :player
 
   enum :card_type, { yellow: 0, red: 1 }
-  CARD_TYPE_ALIASES = { "y" => "yellow", "r" => "red" }.freeze
 
   validate :player_sent_off
   validate :card_type_limit_exceeded
 
   after_create :issue_automatic_red_on_second_yellow
-
-  def card_type=(input)
-    super(CARD_TYPE_ALIASES.fetch(input.to_s.strip.downcase))
-  rescue KeyError
-    raise ArgumentError, "card_type must be 'Y' or 'R'"
-  end
 
   private
   def other_cards_for_same_player_in_match
@@ -27,7 +20,7 @@ class Card < ApplicationRecord
   end
   
   def card_type_limit_exceeded
-    cards_of_same_type = other_cards_for_this_player_in_match.where(card_type: card_type).count
+    cards_of_same_type = other_cards_for_same_player_in_match.where(card_type: card_type).count
 
     if yellow? && cards_of_same_type >= 2
       errors.add(:base, "A player cannot receive more than 2 yellow cards in a single match")
