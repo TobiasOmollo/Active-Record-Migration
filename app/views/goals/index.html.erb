@@ -1,0 +1,26 @@
+<h1>Goals — <%= @match.team_a.name %> vs <%= @match.team_b.name %></h1>
+
+<p>Score: <%= @match.team_a.name %> <%= @match.team_a_score %> — <%= @match.team_b_score %> <%= @match.team_b.name %></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Minute</th>
+      <th>Scorer</th>
+      <th>Assist</th>
+      <th>Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @goals.each do |goal| %>
+      <tr>
+        <td><%= goal.minute %>'</td>
+        <td><%= goal.scorer.name %></td>
+        <td><%= goal.assist&.name || "—" %></td>
+        <td><%= goal.team.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Record a goal", new_match_goal_path(@match) %>
