@@ -1,0 +1,20 @@
+<h1>Record a Card — <%= @match.team_a.name %> vs <%= @match.team_b.name %></h1>
+
+<%= form_with model: @card, url: match_cards_path(@match) do |form| %>
+  <div>
+    <%= form.label :player_id, "Player" %>
+    <%= form.collection_select :player_id, Player.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :card_type, "Card" %>
+    <%= form.select :card_type, [["Yellow", "Y"], ["Red", "R"]] %>
+  </div>
+
+  <div>
+    <%= form.label :minute %>
+    <%= form.number_field :minute %>
+  </div>
+
+  <%= form.submit "Record Card" %>
+<% end %>
