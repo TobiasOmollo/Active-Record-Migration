@@ -10,17 +10,19 @@
       <th>Venue</th>
       <th>Referee</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @matches.each do |match| %>
       <tr>
         <td><%= match.date %></td>
-        <td><%= match.match_type.titleize %></td>
+        <td><%= match.match_type&.titleize || "Not set" %></td>
         <td><%= match.team_a.name %></td>
         <td><%= match.team_b.name %></td>
         <td><%= match.venue %></td>
         <td><%= match.referee %></td>
+        <td><%= link_to "Goals", match_goals_path(match) %></td>
       </tr>
     <% end %>
   </tbody>
