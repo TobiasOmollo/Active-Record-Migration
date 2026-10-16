@@ -1,0 +1,25 @@
+<h1>Record a Goal — <%= @match.team_a.name %> vs <%= @match.team_b.name %></h1>
+
+<%= form_with model: @goal, url: match_goals_path(@match) do |form| %>
+  <div>
+    <%= form.label :team_id, "Scoring team" %>
+    <%= form.collection_select :team_id, [@match.team_a, @match.team_b], :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :scorer_id, "Scorer" %>
+    <%= form.collection_select :scorer_id, Player.all, :id, :name %>
+  </div>
+
+  <div>
+    <%= form.label :assist_id, "Assist (optional)" %>
+    <%= form.collection_select :assist_id, Player.all, :id, :name, { include_blank: "No assist" } %>
+  </div>
+
+  <div>
+    <%= form.label :minute %>
+    <%= form.number_field :minute %>
+  </div>
+
+  <%= form.submit "Record Goal" %>
+<% end %>
