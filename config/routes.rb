@@ -16,5 +16,8 @@ Rails.application.routes.draw do
 
   #For Players Table
   resources :players, only: [:new, :create]
-  resources :matches, only: [:index, :new, :create, :edit, :update]
+  resources :matches, only: [:index, :new, :create, :edit, :update] do
+    resources :goals, only: [:index, :new, :create]
+    resources :cards, only: [:index, :new, :create]
+  end
 end
