@@ -1,0 +1,22 @@
+<h1>Cards — <%= @match.team_a.name %> vs <%= @match.team_b.name %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Minute</th>
+      <th>Player</th>
+      <th>Card</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cards.each do |card| %>
+      <tr>
+        <td><%= card.minute %>'</td>
+        <td><%= card.player.name %></td>
+        <td><%= card.card_type.titleize %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Record a card", new_match_card_path(@match) %>
